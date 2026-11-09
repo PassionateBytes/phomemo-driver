@@ -101,6 +101,8 @@ data-aria-dark="Switch to auto color mode">
 <li><a class="reference internal" href="#requirements">Requirements</a></li>
 <li><a class="reference internal" href="#package-managers">Package managers</a><ul>
 <li><a class="reference internal" href="#dnf-fedora-copr">DNF (Fedora, COPR)</a></li>
+<li><a class="reference internal" href="#apt-debian-ubuntu">APT (Debian, Ubuntu)</a></li>
+<li><a class="reference internal" href="#dnf-fedora-open-build-service">DNF (Fedora, Open Build Service)</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#from-source">From source</a><ul>
@@ -163,14 +165,7 @@ data-aria-dark="Switch to auto color mode">
 </section>
 <section id="package-managers">
 <h2>Package managers<a class="headerlink" href="#package-managers" title="Link to this heading">#</a></h2>
-<p>More package formats are planned.</p>
-<section id="dnf-fedora-copr">
-<h3>DNF (Fedora, COPR)<a class="headerlink" href="#dnf-fedora-copr" title="Link to this heading">#</a></h3>
-<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">sudo<span class="w"> </span>dnf<span class="w"> </span>copr<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>passionatebytes/phomemo-driver
-</span><span data-line="2">sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>phomemo-driver
-</span></pre></div>
-</div>
-<p>The first command adds the COPR repository <a class="reference external" href="https://copr.fedorainfracloud.org/coprs/passionatebytes/phomemo-driver/">passionatebytes/phomemo-driver</a>, the second installs the complete driver package.</p>
+<p>Every route delivers the same two packages:</p>
 <div class="table-wrapper colwidths-auto docutils container">
 <table class="docutils align-default">
 <thead>
@@ -180,7 +175,7 @@ data-aria-dark="Switch to auto color mode">
 </thead>
 <tbody>
 <tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">phomemo-driver</span></code></p></td>
-<td><p>The printer app, both system units, the service user, presets and configuration files. Pulls in <code class="docutils literal notranslate"><span class="pre">python3-phomemo</span></code>, <code class="docutils literal notranslate"><span class="pre">avahi</span></code>, <code class="docutils literal notranslate"><span class="pre">bluez</span></code> and <code class="docutils literal notranslate"><span class="pre">cups</span></code>; recommends <code class="docutils literal notranslate"><span class="pre">cups-browsed</span></code>.</p></td>
+<td><p>The printer app, both system units, the service user and the configuration files. Pulls in <code class="docutils literal notranslate"><span class="pre">python3-phomemo</span></code>, Avahi, BlueZ and CUPS; recommends <code class="docutils literal notranslate"><span class="pre">cups-browsed</span></code>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">python3-phomemo</span></code></p></td>
 <td><p>The Python library and the <code class="docutils literal notranslate"><span class="pre">phomemo-bridge</span></code> command. Install it alone if you only need the library.</p></td>
@@ -188,7 +183,36 @@ data-aria-dark="Switch to auto color mode">
 </tbody>
 </table>
 </div>
-<p>The package enables both services and starts them on first installation. Upgrades restart them and keep your changes to the configuration files.</p>
+<p>The packages enable both services and start them on first installation. Upgrades restart them and keep your changes to the configuration files.</p>
+<section id="dnf-fedora-copr">
+<h3>DNF (Fedora, COPR)<a class="headerlink" href="#dnf-fedora-copr" title="Link to this heading">#</a></h3>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1">sudo<span class="w"> </span>dnf<span class="w"> </span>copr<span class="w"> </span><span class="nb">enable</span><span class="w"> </span>passionatebytes/phomemo-driver
+</span><span data-line="2">sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>phomemo-driver
+</span></pre></div>
+</div>
+<p>The first command adds the COPR repository <a class="reference external" href="https://copr.fedorainfracloud.org/coprs/passionatebytes/phomemo-driver/">passionatebytes/phomemo-driver</a>, the second installs the complete driver package. COPR is the primary route for Fedora.</p>
+</section>
+<section id="apt-debian-ubuntu">
+<h3>APT (Debian, Ubuntu)<a class="headerlink" href="#apt-debian-ubuntu" title="Link to this heading">#</a></h3>
+<p>The Debian packages are built on the <a class="reference external" href="https://build.opensuse.org/project/show/home:passionatebytes:phomemo-driver">Open Build Service</a> for Debian 13 (trixie) and unstable, Ubuntu 24.04 LTS and the current Ubuntu releases. Pick the directory that matches your release (<code class="docutils literal notranslate"><span class="pre">Debian_13</span></code>, <code class="docutils literal notranslate"><span class="pre">Debian_Unstable</span></code>, <code class="docutils literal notranslate"><span class="pre">xUbuntu_24.04</span></code>, <code class="docutils literal notranslate"><span class="pre">xUbuntu_25.10</span></code>, <code class="docutils literal notranslate"><span class="pre">xUbuntu_26.04</span></code>, …):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nv">distro</span><span class="o">=</span>Debian_13
+</span><span data-line="2"><span class="nv">repo</span><span class="o">=</span><span class="s2">&quot;https://download.opensuse.org/repositories/home:/passionatebytes:/phomemo-driver/</span><span class="nv">$distro</span><span class="s2">&quot;</span>
+</span><span data-line="3">curl<span class="w"> </span>-fsSL<span class="w"> </span><span class="s2">&quot;</span><span class="nv">$repo</span><span class="s2">/Release.key&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>gpg<span class="w"> </span>--dearmor<span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/keyrings/phomemo-driver.gpg<span class="w"> </span>&gt;/dev/null
+</span><span data-line="4"><span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;deb [signed-by=/etc/apt/keyrings/phomemo-driver.gpg] </span><span class="nv">$repo</span><span class="s2">/ /&quot;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>sudo<span class="w"> </span>tee<span class="w"> </span>/etc/apt/sources.list.d/phomemo-driver.list
+</span><span data-line="5">sudo<span class="w"> </span>apt<span class="w"> </span>update
+</span><span data-line="6">sudo<span class="w"> </span>apt<span class="w"> </span>install<span class="w"> </span>phomemo-driver
+</span></pre></div>
+</div>
+<p>Debian 12 and Ubuntu releases before 24.04 are not supported: their Python, bleak and Pillow are older than the library’s floors.</p>
+</section>
+<section id="dnf-fedora-open-build-service">
+<h3>DNF (Fedora, Open Build Service)<a class="headerlink" href="#dnf-fedora-open-build-service" title="Link to this heading">#</a></h3>
+<p>The same OBS project also builds the RPM packages, as an alternative to COPR (same spec, different build service and signing key; use one of the two repositories, not both):</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span data-line="1"><span class="nv">release</span><span class="o">=</span><span class="k">$(</span>rpm<span class="w"> </span>-E<span class="w"> </span>%fedora<span class="k">)</span>
+</span><span data-line="2">sudo<span class="w"> </span>dnf<span class="w"> </span>config-manager<span class="w"> </span>addrepo<span class="w"> </span>--from-repofile<span class="o">=</span><span class="s2">&quot;https://download.opensuse.org/repositories/home:/passionatebytes:/phomemo-driver/Fedora_</span><span class="nv">$release</span><span class="s2">/home:passionatebytes:phomemo-driver.repo&quot;</span>
+</span><span data-line="3">sudo<span class="w"> </span>dnf<span class="w"> </span>install<span class="w"> </span>phomemo-driver
+</span></pre></div>
+</div>
 </section>
 </section>
 <section id="from-source">
